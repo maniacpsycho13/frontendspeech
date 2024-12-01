@@ -2,3 +2,8 @@
   background: linear-gradient(180deg, #02B9CE 0%, #873DCE 100%);
   border-radius: 37px;
 }
+
+.boxgradient2 {
+  background: linear-gradient(180deg, #FF7E5F 0%, #D53B65 100%);
+  border-radius: 37px;
+}

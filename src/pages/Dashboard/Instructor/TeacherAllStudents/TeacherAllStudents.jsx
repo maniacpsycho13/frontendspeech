@@ -5,7 +5,9 @@ import toast, { Toaster } from 'react-hot-toast';
 
 const TeacherAllStudents = () => {
   const [students, setStudents] = useState([]); 
+  const [students2, setStudents2] = useState([]); 
   const [selectedStudent, setSelectedStudent] = useState(null); 
+ 
   const [studentDetails, setStudentDetails] = useState(null); 
   const [isModalOpen, setIsModalOpen] = useState(false); 
   const uniqueId = localStorage.getItem('uniqueId');
@@ -29,6 +31,25 @@ const TeacherAllStudents = () => {
     };
 
     if (uniqueId) fetchStudents();
+  }, [uniqueId]);
+  useEffect(() => {
+    const fetchStudents2 = async () => {
+      try {
+        toast.loading('Fetching students...');
+        const response2 = await axios.get(
+          `https://speechbk-asghe5g9d2fsfydr.eastus2-01.azurewebsites.net/api/v1/data/student/data/${uniqueId}`
+        );
+        toast.dismiss();
+        toast.success('Students fetched successfully!');
+        setStudents2(response2.data); // Correctly set students from API response
+      } catch (error) {
+        toast.dismiss();
+        toast.error('Error fetching students!');
+        console.error('Error fetching students:', error);
+      }
+    };
+
+    if (uniqueId) fetchStudents2();
   }, [uniqueId]);
 
   // Fetch student additional details (completeness, pronunciation, fluency, etc.)
@@ -64,12 +85,52 @@ const TeacherAllStudents = () => {
   return (
     <div>
       <Toaster />
-      <h2 className="text-3xl font-bold">List Of Students</h2>
-      <div className="flex flex-wrap gap-12 mt-8">
+      <h2 className="text-3xl font-bold text-center">List Of Students</h2>
+      <div className='text-2xl font-bold mt-4 text-[#5702CE] '>Azure Student Cards</div>
+      <div className="flex flex-wrap gap-12 mt-3">
         {students.map((student) => (
           <div
             key={student.id}
             className="flex flex-wrap pl-4 py-3 boxgradient w-[22rem] h-[13rem] overflow-hidden relative"
+          >
+            <div className="flex w-full gap-6 pr-4">
+              <div>
+                <img
+                  src={student.profile || kidProfile}
+                  alt="profile"
+                  width={72}
+                  height={72}
+                  className="rounded-full border-[4px] border-[#6F52CE] p-[2px]"
+                />
+              </div>
+              <div className="text-[#5702CE] font-extrabold text-[24px] mt-2">
+                {student.name || 'N/A'}
+              </div>
+            </div>
+            <div>
+              <p className="text-white font-medium">Accuracy: {student.accuracy}%</p>
+            </div>
+            <p className="absolute text-[263px] text-white font-extrabold opacity-30 transform translate-x-[170px] -translate-y-[50px]">
+              {student.highestLevel}
+            </p>
+            <button
+              onClick={() => openModal(student)}
+              className="absolute transform translate-x-[250px] translate-y-[140px] px-4 py-2 bg-[#6920CF] rounded-2xl text-white font-medium hover:bg-[#5420CF] cursor-pointer"
+            >
+              View
+            </button>
+          </div>
+        ))}
+      </div>
+
+      <div className='text-2xl font-bold mt-8 text-[#5702CE] '>
+        Custom Student Card
+      </div>
+      <div className="flex flex-wrap gap-12 mt-3">
+        {students2.map((student) => (
+          <div
+            key={student.id}
+            className="flex flex-wrap pl-4 py-3 boxgradient2 w-[22rem] h-[13rem] overflow-hidden relative"
           >
             <div className="flex w-full gap-6 pr-4">
               <div>
