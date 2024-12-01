@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import LevelBox from '../../common/LevelBox';
 
-const Level1Comp = ({ params }) => {
+const Level1Comp = () => {
   const [clickedLetters, setClickedLetters] = useState([]);
   const [showDialog, setShowDialog] = useState(false);
   const [selectedLetter, setSelectedLetter] = useState('');

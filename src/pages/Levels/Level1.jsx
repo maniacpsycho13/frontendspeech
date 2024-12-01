@@ -1,5 +1,5 @@
-import React from 'react'
-import Navbar from '../../components/common/Header/Navbar'
+// import React from 'react'
+// import Navbar from '../../components/common/Header/Navbar'
 import Level1Comp from "../../components/core/LevelsComp/Level1Comp"
 
 const Level1 = () => {

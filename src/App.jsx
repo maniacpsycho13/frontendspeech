@@ -11,7 +11,6 @@ import Assignment from './pages/Dashboard/Student/Assignment/Assignment';
 import Stats from './pages/Dashboard/Student/Stats/Stats';
 import TeacherAccount from './pages/Dashboard/Instructor/TeacherAccount/TeacherAccount';
 import TeacherAllStudents from './pages/Dashboard/Instructor/TeacherAllStudents/TeacherAllStudents';
-import {jwtDecode} from 'jwt-decode';
 import Navbar from './components/common/Header/Navbar';
 import Verification from './pages/Auth/Verification';
 
