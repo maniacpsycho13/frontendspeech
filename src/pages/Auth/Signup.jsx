@@ -4,7 +4,7 @@ import { ACCOUNT_TYPE } from "../../utils/constants";
 import Tab from "../../components/common/Tab";
 import { StudentPic, TeacherPic } from "../../assets/common";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
 
 const Signup = () => {
@@ -191,6 +191,7 @@ const Signup = () => {
               Send OTP
             </button>
           </form>
+          <Link to={'/login'}><div className='text-base text-blue-500 font-semibold text-right cursor-pointer '>Login...</div></Link>
         </div>
         <div className="rounded-xl">
           <img

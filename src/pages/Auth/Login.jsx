@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
 import { ACCOUNT_TYPE } from '../../utils/constants';
 import Tab from '../../components/common/Tab';
@@ -158,8 +158,11 @@ const Login = () => {
           >
             Login
           </button>
+
         </form>
+        <Link to={'/signup'}><div className='text-base text-blue-500 font-semibold text-right cursor-pointer '>Create account...</div></Link>
       </div>
+      
 
       <div className="border-2 border-black">
         <img

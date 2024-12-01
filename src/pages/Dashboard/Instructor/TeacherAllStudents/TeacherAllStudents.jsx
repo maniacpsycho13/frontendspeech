@@ -4,9 +4,10 @@ import { kidProfile } from '../../../../assets/common';
 import toast, { Toaster } from 'react-hot-toast';
 
 const TeacherAllStudents = () => {
-  const [students, setStudents] = useState([]); // Holds list of students
-  const [selectedStudent, setSelectedStudent] = useState(null); // Holds selected student data
-  const [isModalOpen, setIsModalOpen] = useState(false); // Controls dialog visibility
+  const [students, setStudents] = useState([]); 
+  const [selectedStudent, setSelectedStudent] = useState(null); 
+  const [studentDetails, setStudentDetails] = useState(null); 
+  const [isModalOpen, setIsModalOpen] = useState(false); 
   const uniqueId = localStorage.getItem('uniqueId');
 
   // Fetch all students
@@ -30,16 +31,16 @@ const TeacherAllStudents = () => {
     if (uniqueId) fetchStudents();
   }, [uniqueId]);
 
-  // Open modal and fetch details of a selected student
-  const openModal = async (id) => {
+  // Fetch student additional details (completeness, pronunciation, fluency, etc.)
+  const fetchStudentDetails = async (id) => {
     try {
       toast.loading('Fetching student details...');
       const response = await axios.get(
         `https://speechbk-asghe5g9d2fsfydr.eastus2-01.azurewebsites.net/api/v1/level/data/student/${id}`
       );
       toast.dismiss();
-      setSelectedStudent(response.data); // Set selected student details
-      setIsModalOpen(true);
+      toast.success('Student details fetched successfully!');
+      setStudentDetails(response.data); // Set the student details data
     } catch (error) {
       toast.dismiss();
       toast.error('Error fetching student details!');
@@ -47,8 +48,16 @@ const TeacherAllStudents = () => {
     }
   };
 
+  // Open modal with selected student details
+  const openModal = (student) => {
+    setSelectedStudent(student); // Set the selected student directly
+    fetchStudentDetails(student.id); // Fetch additional student details
+    setIsModalOpen(true); // Open the modal
+  };
+
   const closeModal = () => {
     setSelectedStudent(null);
+    setStudentDetails(null); // Reset details when modal is closed
     setIsModalOpen(false);
   };
 
@@ -83,7 +92,7 @@ const TeacherAllStudents = () => {
               {student.highestLevel}
             </p>
             <button
-              onClick={() => openModal(student.id)}
+              onClick={() => openModal(student)}
               className="absolute transform translate-x-[250px] translate-y-[140px] px-4 py-2 bg-[#6920CF] rounded-2xl text-white font-medium hover:bg-[#5420CF] cursor-pointer"
             >
               View
@@ -92,42 +101,71 @@ const TeacherAllStudents = () => {
         ))}
       </div>
 
-      {/* Dialog Box */}
+      {/* Modal */}
       {isModalOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
-          <div className="bg-white p-6 rounded-lg w-[90%] max-w-lg relative">
+        <div className="fixed inset-0 bg-gradient-to-r from-[#57555e] to-[#413e4e] bg-opacity-90 flex justify-center items-center">
+          <div className="bg-white p-8 rounded-2xl shadow-2xl w-[90%] max-w-lg relative">
             <button
-              className="absolute top-3 right-3 text-red-500 font-bold"
+              className="absolute top-4 right-4 text-[#F87171] font-bold text-xl hover:text-red-600 transition-transform transform hover:scale-110"
               onClick={closeModal}
             >
               ✕
             </button>
-            {selectedStudent ? (
-              <div>
-                <h2 className="text-2xl font-bold text-[#6F52CE]">
+            {selectedStudent && studentDetails ? (
+              <div className="text-center">
+                {/* Profile Photo */}
+                <img
+                  src={selectedStudent.profile || kidProfile}
+                  alt="Profile"
+                  className="w-32 h-32 mx-auto rounded-full border-[5px] border-[#6F52CE] shadow-lg mb-4"
+                />
+                {/* Name */}
+                <h2 className="text-3xl font-extrabold text-[#6F52CE] mb-2">
                   {selectedStudent.name || 'N/A'}
                 </h2>
-                <div className="mt-4">
-                  <p>
-                    <strong>Student ID:</strong> {selectedStudent.id}
+                {/* Level and Accuracy */}
+                <div className="flex justify-center gap-4 mb-6">
+                  <div className="bg-[#E0E7FF] px-4 py-2 rounded-lg shadow-md">
+                    <p className="text-sm font-medium text-gray-700">Level</p>
+                    <p className="text-xl font-bold text-[#6920CF]">
+                      {selectedStudent.highestLevel || 'N/A'}
+                    </p>
+                  </div>
+                  <div className="bg-[#E6FFFA] px-4 py-2 rounded-lg shadow-md">
+                    <p className="text-sm font-medium text-gray-700">Accuracy</p>
+                    <p className="text-xl font-bold text-[#059669]">
+                      {selectedStudent.accuracy || 'N/A'}%
+                    </p>
+                  </div>
+                </div>
+                {/* Progress Details */}
+                <div className="mt-6 space-y-4 bg-[#F9F9FF] p-6 rounded-xl shadow-inner">
+                  <p className="text-lg">
+                    <strong className="text-[#A393EB]">Student ID:</strong> {studentDetails.studentId}
                   </p>
-                  <p>
-                    <strong>Highest Level:</strong> {selectedStudent.highestLevel || 'N/A'}
+                  <p className="text-lg">
+                    <strong className="text-[#A393EB]">Completeness:</strong> {studentDetails.averageCompleteness || 'N/A'}%
                   </p>
-                  <p>
-                    <strong>Accuracy:</strong> {selectedStudent.accuracy || 'N/A'}%
+                  <p className="text-lg">
+                    <strong className="text-[#A393EB]">Pronunciation:</strong> {studentDetails.averagePronunciation || 'N/A'}%
                   </p>
-                  <p>
-                    <strong>Pronunciation:</strong>{' '}
-                    {selectedStudent.pronunciation || 'N/A'}
+                  <p className="text-lg">
+                    <strong className="text-[#A393EB]">Fluency:</strong> {studentDetails.averageFluency || 'N/A'}%
                   </p>
-                  <p>
-                    <strong>Fluency:</strong> {selectedStudent.fluency || 'N/A'}
-                  </p>
+                </div>
+                {/* Progress Bar */}
+                <div className="mt-6">
+                  <p className="text-gray-700 font-medium mb-2">Accuracy Progress</p>
+                  <div className="w-full bg-gray-300 rounded-full h-4">
+                    <div
+                      className="bg-[#6F52CE] h-4 rounded-full"
+                      style={{ width: `${selectedStudent.accuracy || 0}%` }}
+                    ></div>
+                  </div>
                 </div>
               </div>
             ) : (
-              <p>Loading student details...</p>
+              <p className="text-center text-white text-lg font-medium">Loading student details...</p>
             )}
           </div>
         </div>

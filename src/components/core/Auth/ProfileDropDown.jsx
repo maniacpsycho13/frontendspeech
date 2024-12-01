@@ -29,15 +29,20 @@ export default function ProfileDropdown() {
   console.log("Student ID:", studentId);
   
   let linkpath = null;
-  if(teacherId!=null) {
-    linkpath = `/dashboard-teacher/account`;
-  }else{
+  if(studentId!="null") {
     linkpath = `/dashboard-student/account`;
+  }else{
+    linkpath = `/dashboard-teacher/account`;
   }
 
   const logoutHandler = () => {
     localStorage.removeItem("token"); 
     localStorage.removeItem("user"); 
+    localStorage.removeItem("name");
+    localStorage.removeItem("email");
+    localStorage.removeItem("studentId");
+    localStorage.removeItem("teacherId");
+    localStorage.removeItem("uniqueId");
     // setUser(null); 
     navigate("/login"); 
   };
@@ -71,8 +76,8 @@ export default function ProfileDropdown() {
 
           {/* Logout option */}
           <div
-            // onClick={logoutHandler}
-            className="flex w-full items-center gap-x-1 py-[10px] px-[12px] text-sm text-richblack-100 hover:bg-richblack-700 hover:text-richblack-25"
+             onClick={logoutHandler}
+            className="flex w-full items-center gap-x-1 py-[10px] px-[12px] text-sm text-richblack-100 hover:bg-richblack-700 hover:text-richblack-25 cursor-pointer"
           >
             <VscSignOut className="text-lg" />
             Logout
