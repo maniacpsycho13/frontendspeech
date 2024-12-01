@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import LevelBox from '../../common/LevelBox';
 
-const Level1Comp = () => {
+const Level2Comp = () => {
   const [clickedLetters, setClickedLetters] = useState([]);
   const [showDialog, setShowDialog] = useState(false);
   const [selectedLetter, setSelectedLetter] = useState('');
@@ -37,7 +37,7 @@ const Level1Comp = () => {
     setSelectedLetter('');
   };
 
-  const level = 1;
+  const level = 2;
 
   const handleLevel = (index) => {
     const subLevel = { level, subLevel: index + 1 };
@@ -50,14 +50,14 @@ const Level1Comp = () => {
 
   console.log("Updated level array: ", levelArray);
 
-  const letters = ['Rainbow', 'Butterfly', 'Raindrop', 'Wiggle', 'Magic', 'Wonder'];
+  const letters = ['The rainbow has so many pretty colors', 'The bunny likes to hop and jump', 'A butterfly flies over the green grass.'];
 
   return (
     <div className="w-full h-screen overflow-y-auto p-8 ">
       <h1 className="text-black text-[40px] font-extrabold text-center mb-8">
-        LEVEL 1: Choose a Letter
+        LEVEL 2: Choose a Sentence
       </h1>
-      <div className="grid grid-cols-4 gap-12 mx-auto mt-4">
+      <div className="grid grid-cols-2 gap-12 mx-auto mt-4">
         {letters.map((letter, index) => (
           <div
             key={index}
@@ -81,4 +81,4 @@ const Level1Comp = () => {
   );
 };
 
-export default Level1Comp;
+export default Level2Comp;

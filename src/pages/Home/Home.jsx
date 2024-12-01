@@ -75,7 +75,7 @@ const Home = () => {
 
             <div className='flex gap-6  justify-center items-center'>
                 <div className='bg-white text-base p-6 rounded-xl w-[30%]'>
-                    <Link to={'/level1'} className='text-[#5B9CF9] font-bold text-3xl' >LEVEL 02</Link>
+                    <Link to={'/level2'} className='text-[#5B9CF9] font-bold text-3xl' >LEVEL 02</Link>
                     <p className='mt-4 font-semibold text-2xl '>Play With Words :</p>
                     <p className='text-xl  mt-2 font-medium text-justify'>Take your pronunciation skills to the next level by exploring full words! Practice saying complete words, understanding how sounds combine to form them.</p>
                 </div>

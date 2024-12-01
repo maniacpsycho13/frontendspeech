@@ -13,6 +13,7 @@ import TeacherAccount from './pages/Dashboard/Instructor/TeacherAccount/TeacherA
 import TeacherAllStudents from './pages/Dashboard/Instructor/TeacherAllStudents/TeacherAllStudents';
 import Navbar from './components/common/Header/Navbar';
 import Verification from './pages/Auth/Verification';
+import Level2 from './pages/Levels/Level2';
 
 function App() {
   
@@ -36,6 +37,7 @@ function App() {
         />
         <Route path="/verification" element={<Verification/>}></Route>
         <Route path="/level1" element={<Level1/>} /> 
+        <Route path="/level2" element={<Level2/>} /> 
 
         <Route path="/dashboard-student/*"  element={<Studentdash/>}>
           <Route path="account" element={<Account/>} /> 
