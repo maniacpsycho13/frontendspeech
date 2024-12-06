@@ -4,7 +4,7 @@ import * as sdk from 'microsoft-cognitiveservices-speech-sdk';
 import CongratsBox from '../CongratsBox';
 import toast, { Toaster } from 'react-hot-toast';
 
-const AzureRecorder = ({ letter, levelArray, userid, onClose,audioData }) => {
+const CustomRecorder = ({ letter, levelArray, userid, onClose, audioData }) => {
   const [isRecording, setIsRecording] = useState(false);
   const [recognizer, setRecognizer] = useState(null);
   const [transcribedText, setTranscribedText] = useState('');
@@ -17,7 +17,7 @@ const AzureRecorder = ({ letter, levelArray, userid, onClose,audioData }) => {
   const [showRetry, setShowRetry] = useState(false);
 
   useEffect(() => {
-    const speechConfig = sdk.SpeechConfig.fromSubscription("82bdaa2bcfd846df82c3b613f26106e6", "eastus");
+    const speechConfig = sdk.SpeechConfig.fromSubscription("d6e3583632cb433aad65bd3e66daa253", "eastus");
     speechConfig.speechRecognitionLanguage = "en-US";
     const audioConfig = sdk.AudioConfig.fromDefaultMicrophoneInput();
 
@@ -67,22 +67,21 @@ const AzureRecorder = ({ letter, levelArray, userid, onClose,audioData }) => {
     };
   }, [letter]);
 
-  // const startRecording = () => {
-  //   setIsRecording(true);
-  //   recognizer?.startContinuousRecognitionAsync();
-  // };
-  if(audioData=="Running"){
+//   const startRecording = () => {
+//     setIsRecording(true);
+//     recognizer?.startContinuousRecognitionAsync();
+//   };
+
+//   const stopRecording = () => {
+//     setIsRecording(false);
+//     recognizer?.stopContinuousRecognitionAsync();
+//   };
+
+if(audioData=="Running"){
     recognizer?.startContinuousRecognitionAsync();
   }else{
     recognizer?.stopContinuousRecognitionAsync();
   }
-
-  // const stopRecording = () => {
-  //   setIsRecording(false);
-  //   recognizer?.stopContinuousRecognitionAsync();
-  // };
-
-  // console.log("Audio data:", audioData);
 
   const handleSubmit = async () => {
     try {
@@ -113,7 +112,7 @@ const AzureRecorder = ({ letter, levelArray, userid, onClose,audioData }) => {
         );
 
       // Submit the test data
-      const response = await axios.post("https://speechbk-asghe5g9d2fsfydr.eastus2-01.azurewebsites.net/api/v1/test/test-attempt/azure", testData);
+      const response = await axios.post("https://speechbk-asghe5g9d2fsfydr.eastus2-01.azurewebsites.net/api/v1/test/test-attempt/custom", testData);
       console.log("Test submission response:", response);
 
       // Check the completeness score and send a new-level attempt request if conditions are met
@@ -191,4 +190,4 @@ const AzureRecorder = ({ letter, levelArray, userid, onClose,audioData }) => {
   );
 };
 
-export default AzureRecorder;
+export default CustomRecorder;
