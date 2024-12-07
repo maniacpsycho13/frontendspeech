@@ -5,7 +5,7 @@ import CongratsBox from '../CongratsBox';
 import toast, { Toaster } from 'react-hot-toast';
 
 const CustomRecorder = ({ letter, levelArray, userid, onClose,audioData,submitted,resetSubmit }) => {
-
+  const [isRecording, setIsRecording] = useState(false);
   const [recognizer, setRecognizer] = useState(null);
   const [transcribedText, setTranscribedText] = useState('');
   const [accuracyScore, setAccuracyScore] = useState(null);
@@ -69,22 +69,22 @@ const CustomRecorder = ({ letter, levelArray, userid, onClose,audioData,submitte
     };
   }, [letter]);
 
-  // const startRecording = () => {
-  //   setIsRecording(true);
-  //   recognizer?.startContinuousRecognitionAsync();
-  // };
-  useEffect(() => {
-    if(audioData=="Running"){
-      recognizer?.startContinuousRecognitionAsync();
-    }else{
-      recognizer?.stopContinuousRecognitionAsync();
-    }
-  }, [audioData, recognizer]);
+  const startRecording = () => {
+    setIsRecording(true);
+    recognizer?.startContinuousRecognitionAsync();
+  };
+  // useEffect(() => {
+  //   if(audioData=="Running"){
+  //     recognizer?.startContinuousRecognitionAsync();
+  //   }else{
+  //     recognizer?.stopContinuousRecognitionAsync();
+  //   }
+  // }, [audioData, recognizer]);
 
-  // const stopRecording = () => {
-  //   setIsRecording(false);
-  //   recognizer?.stopContinuousRecognitionAsync();
-  // };
+  const stopRecording = () => {
+    setIsRecording(false);
+    recognizer?.stopContinuousRecognitionAsync();
+  };
 
   // console.log("Audio data:", audioData);
 
@@ -120,7 +120,7 @@ const CustomRecorder = ({ letter, levelArray, userid, onClose,audioData,submitte
         );
 
       // Submit the test data
-      const response = await axios.post("http:///speechbk-asghe5g9d2fsfydr.eastus2-01.azurewebsites.net/api/v1/test/test-attempt/azure", testData);
+      const response = await axios.post("https:///speechbk-asghe5g9d2fsfydr.eastus2-01.azurewebsites.net/api/v1/test/test-attempt/azure", testData);
       console.log("Test submission response:", response);
 
       // Check the completeness score and send a new-level attempt request if conditions are met
@@ -170,11 +170,11 @@ const CustomRecorder = ({ letter, levelArray, userid, onClose,audioData,submitte
       <div className='flex mt-3'>
         <p className='text-red-500 font-bold text-[24px]'>{letter}</p>
       </div>
-      {/* <div className='flex justify-center mt-4'>
+      <div className='flex justify-center mt-4'>
         <button onClick={isRecording ? stopRecording : startRecording} className='bg-gradient-to-br font-bold from-[#3B82F6] to-[#D1C4E9] px-6 py-3 text-white rounded-xl shadow-lg hover:shadow-2xl transition-transform transform hover:scale-105'>
           {isRecording ? 'Stop Recording' : 'Start Recording'}
         </button>
-      </div> */}
+      </div>
       <div>
         <h2 className='text-sm mt-2 mb-2'>Transcribed Text: <span className='text-base font-bold ml-2'>{transcribedText}</span></h2>
         {accuracyScore !== null && (

@@ -67,23 +67,23 @@ const AzureRecorder = ({ letter, levelArray, userid, onClose,audioData,submitted
     };
   }, [letter]);
 
-  // const startRecording = () => {
-  //   setIsRecording(true);
-  //   recognizer?.startContinuousRecognitionAsync();
-  // };
-  useEffect(() => {
-    if(audioData=="Running"){
-      recognizer?.startContinuousRecognitionAsync();
-    }else{
-      recognizer?.stopContinuousRecognitionAsync();
-    }
-  }, [audioData, recognizer]);
+  const startRecording = () => {
+    setIsRecording(true);
+    recognizer?.startContinuousRecognitionAsync();
+  };
+  // useEffect(() => {
+  //   if(audioData=="Running"){
+  //     recognizer?.startContinuousRecognitionAsync();
+  //   }else{
+  //     recognizer?.stopContinuousRecognitionAsync();
+  //   }
+  // }, [audioData, recognizer]);
   
 
-  // const stopRecording = () => {
-  //   setIsRecording(false);
-  //   recognizer?.stopContinuousRecognitionAsync();
-  // };
+  const stopRecording = () => {
+    setIsRecording(false);
+    recognizer?.stopContinuousRecognitionAsync();
+  };
 
   // console.log("Audio data:", audioData);
 
@@ -171,11 +171,11 @@ const AzureRecorder = ({ letter, levelArray, userid, onClose,audioData,submitted
       <div className='flex mt-3'>
         <p className='text-red-500 font-bold text-[24px]'>{letter}</p>
       </div>
-      {/* <div className='flex justify-center mt-4'>
+      <div className='flex justify-center mt-4'>
         <button onClick={isRecording ? stopRecording : startRecording} className='bg-gradient-to-br font-bold from-[#3B82F6] to-[#D1C4E9] px-6 py-3 text-white rounded-xl shadow-lg hover:shadow-2xl transition-transform transform hover:scale-105'>
           {isRecording ? 'Stop Recording' : 'Start Recording'}
         </button>
-      </div> */}
+      </div>
       <div>
         <h2 className='text-sm mt-2 mb-2'>Transcribed Text: <span className='text-base font-bold ml-2'>{transcribedText}</span></h2>
         {accuracyScore !== null && (

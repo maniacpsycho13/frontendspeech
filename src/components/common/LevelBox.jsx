@@ -33,14 +33,14 @@ const LevelBox = ({ closeDialog, letter, levelArray, userid }) => {
           </button>
         </div>
 
-        <div className="flex justify-center mt-4">
+        {/* <div className="flex justify-center mt-4">
           <button
             onClick={isRecording ? stopRecording : startRecording}
             className="bg-gradient-to-br font-bold from-[#3B82F6] to-[#D1C4E9] px-6 py-3 text-white rounded-xl shadow-lg hover:shadow-2xl transition-transform transform hover:scale-105"
           >
             {isRecording ? 'Stop Recording' : 'Start Recording'}
           </button>
-        </div>
+        </div> */}
 
         {/* Content Area */}
         <div className='flex gap-8 mt-8'>

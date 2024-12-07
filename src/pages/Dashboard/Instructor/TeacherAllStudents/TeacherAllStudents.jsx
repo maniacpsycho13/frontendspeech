@@ -18,7 +18,7 @@ const TeacherAllStudents = () => {
       try {
         toast.loading('Fetching students...');
         const response = await axios.get(
-          `https://speechbk-asghe5g9d2fsfydr.eastus2-01.azurewebsites.net/api/v1/data/student/data/${uniqueId}`
+          `https://speechbk-asghe5g9d2fsfydr.eastus2-01.azurewebsites.net/api/v1/data/student/data/${uniqueId}/Azure-001`
         );
         toast.dismiss();
         toast.success('Students fetched successfully!');
@@ -37,7 +37,7 @@ const TeacherAllStudents = () => {
       try {
         toast.loading('Fetching students...');
         const response2 = await axios.get(
-          `https://speechbk-asghe5g9d2fsfydr.eastus2-01.azurewebsites.net/api/v1/data/student/data/${uniqueId}/Azure-001`
+          `https://speechbk-asghe5g9d2fsfydr.eastus2-01.azurewebsites.net/api/v1/data/student/data/${uniqueId}/Custom-001`
         );
         toast.dismiss();
         toast.success('Students fetched successfully!');
@@ -111,7 +111,7 @@ const TeacherAllStudents = () => {
               <p className="text-white font-medium">Accuracy: {student.accuracy}%</p>
             </div>
             <p className="absolute text-[263px] text-white font-extrabold opacity-30 transform translate-x-[170px] -translate-y-[50px]">
-              {student.highestLevel}
+              {/* {student.highestLevel} */} 1
             </p>
             <button
               onClick={() => openModal(student)}
@@ -150,7 +150,7 @@ const TeacherAllStudents = () => {
               <p className="text-white font-medium">Accuracy: {student.accuracy}%</p>
             </div>
             <p className="absolute text-[263px] text-white font-extrabold opacity-30 transform translate-x-[170px] -translate-y-[50px]">
-              {student.highestLevel}
+              {/* {student.highestLevel} */}1
             </p>
             <button
               onClick={() => openModal(student)}
@@ -189,7 +189,7 @@ const TeacherAllStudents = () => {
                   <div className="bg-[#E0E7FF] px-4 py-2 rounded-lg shadow-md">
                     <p className="text-sm font-medium text-gray-700">Level</p>
                     <p className="text-xl font-bold text-[#6920CF]">
-                      {selectedStudent.highestLevel || 'N/A'}
+                      {selectedStudent.highestLevel || 1}
                     </p>
                   </div>
                   <div className="bg-[#E6FFFA] px-4 py-2 rounded-lg shadow-md">
@@ -205,13 +205,13 @@ const TeacherAllStudents = () => {
                     <strong className="text-[#A393EB]">Student ID:</strong> {studentDetails.studentId}
                   </p>
                   <p className="text-lg">
-                    <strong className="text-[#A393EB]">Completeness:</strong> {studentDetails.averageCompleteness || 'N/A'}%
+                    <strong className="text-[#A393EB]">Completeness:</strong> {studentDetails.averageCompleteness/100  || 'N/A'} %
                   </p>
                   <p className="text-lg">
-                    <strong className="text-[#A393EB]">Pronunciation:</strong> {studentDetails.averagePronunciation || 'N/A'}%
+                    <strong className="text-[#A393EB]">Pronunciation:</strong> {studentDetails.averagePronunciation/100 || 'N/A'} %
                   </p>
                   <p className="text-lg">
-                    <strong className="text-[#A393EB]">Fluency:</strong> {studentDetails.averageFluency || 'N/A'}%
+                    <strong className="text-[#A393EB]">Fluency:</strong> {studentDetails.averageFluency/100 || 'N/A'} %
                   </p>
                 </div>
                 {/* Progress Bar */}
