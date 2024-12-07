@@ -14,6 +14,7 @@ import TeacherAllStudents from './pages/Dashboard/Instructor/TeacherAllStudents/
 import Navbar from './components/common/Header/Navbar';
 import Verification from './pages/Auth/Verification';
 import Level2 from './pages/Levels/Level2';
+import TeacherSetting from './pages/Dashboard/Instructor/TeacherSetting/TeacherSetting';
 
 function App() {
   
@@ -48,6 +49,7 @@ function App() {
         <Route path="/dashboard-teacher/*" element={<Instructordash/>}> 
           <Route path="account" element={<TeacherAccount/>} /> 
           <Route path="allstudents" element={<TeacherAllStudents/>} />
+          <Route path="setting" element={<TeacherSetting/>} />
         </Route>
       </Routes>
       

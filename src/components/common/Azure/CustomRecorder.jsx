@@ -4,8 +4,8 @@ import * as sdk from 'microsoft-cognitiveservices-speech-sdk';
 import CongratsBox from '../CongratsBox';
 import toast, { Toaster } from 'react-hot-toast';
 
-const CustomRecorder = ({ letter, levelArray, userid, onClose, audioData }) => {
-  const [isRecording, setIsRecording] = useState(false);
+const CustomRecorder = ({ letter, levelArray, userid, onClose,audioData,submitted,resetSubmit }) => {
+
   const [recognizer, setRecognizer] = useState(null);
   const [transcribedText, setTranscribedText] = useState('');
   const [accuracyScore, setAccuracyScore] = useState(null);
@@ -18,8 +18,10 @@ const CustomRecorder = ({ letter, levelArray, userid, onClose, audioData }) => {
 
   useEffect(() => {
     const speechConfig = sdk.SpeechConfig.fromSubscription("d6e3583632cb433aad65bd3e66daa253", "eastus");
+    
     speechConfig.speechRecognitionLanguage = "en-US";
     const audioConfig = sdk.AudioConfig.fromDefaultMicrophoneInput();
+
 
     const pronunciationAssessmentConfig = new sdk.PronunciationAssessmentConfig(
       letter,
@@ -67,21 +69,24 @@ const CustomRecorder = ({ letter, levelArray, userid, onClose, audioData }) => {
     };
   }, [letter]);
 
-//   const startRecording = () => {
-//     setIsRecording(true);
-//     recognizer?.startContinuousRecognitionAsync();
-//   };
+  // const startRecording = () => {
+  //   setIsRecording(true);
+  //   recognizer?.startContinuousRecognitionAsync();
+  // };
+  useEffect(() => {
+    if(audioData=="Running"){
+      recognizer?.startContinuousRecognitionAsync();
+    }else{
+      recognizer?.stopContinuousRecognitionAsync();
+    }
+  }, [audioData, recognizer]);
 
-//   const stopRecording = () => {
-//     setIsRecording(false);
-//     recognizer?.stopContinuousRecognitionAsync();
-//   };
+  // const stopRecording = () => {
+  //   setIsRecording(false);
+  //   recognizer?.stopContinuousRecognitionAsync();
+  // };
 
-if(audioData=="Running"){
-    recognizer?.startContinuousRecognitionAsync();
-  }else{
-    recognizer?.stopContinuousRecognitionAsync();
-  }
+  // console.log("Audio data:", audioData);
 
   const handleSubmit = async () => {
     try {
@@ -90,20 +95,23 @@ if(audioData=="Running"){
       console.log("levelArray", levelArray);
       const testData = {
         total_score: parseFloat((completeScore / 11).toFixed(2)).toString(),
-        pronounciation: parseFloat((pronunciationScore / 10).toFixed(2)).toString(),
-        completness: parseFloat((completenessScore / 11).toFixed(2)).toString(),
+        pronunciation: parseFloat((pronunciationScore / 10).toFixed(2)).toString(),
+        completeness: parseFloat((completenessScore / 11).toFixed(2)).toString(),
         fluency: parseFloat((fluencyScore / 11).toFixed(2)).toString(),
-        levelId: parseInt(levelArray[0].level),
+        levelId: 4,
         sublevelNo: parseInt(levelArray[0].subLevel),
         studentId: parseInt(userid),
+        languageModelID :"Custom-001"
       };
       console.log("Test data:", testData);
       console.log("completeScore", (completeScore / 11).toFixed(2));
       if ((completeScore / 11).toFixed(2) > 8) {
         const newLevelData = {
           studentId: parseInt(userid),
-          sub_level: parseInt(levelArray[0].subLevel),
+          sub_level:6,
           targetLevel: parseInt(levelArray[0].level),
+          langaugeModelID1 :"Azure-001",
+          langaugeModelID2 :"Custom-001"
         };
         console.log("New level attempt data:", newLevelData);
         const newLevelResponse = await axios.post(
@@ -112,7 +120,7 @@ if(audioData=="Running"){
         );
 
       // Submit the test data
-      const response = await axios.post("https://speechbk-asghe5g9d2fsfydr.eastus2-01.azurewebsites.net/api/v1/test/test-attempt/custom", testData);
+      const response = await axios.post("http:///speechbk-asghe5g9d2fsfydr.eastus2-01.azurewebsites.net/api/v1/test/test-attempt/azure", testData);
       console.log("Test submission response:", response);
 
       // Check the completeness score and send a new-level attempt request if conditions are met
@@ -133,6 +141,15 @@ if(audioData=="Running"){
       toast.error('Error submitting data');
     }
   };
+  console.log("Submitted:", submitted);
+
+  useEffect(() => {
+    if(submitted == 'Submitted'){
+      handleSubmit();
+      resetSubmit();
+    }
+  }, [submitted, resetSubmit]);
+
 
   useEffect(() => {
     if (showCongrats || showRetry) {
@@ -170,7 +187,7 @@ if(audioData=="Running"){
               <h2 className='text-sm'>Complete Score: <span className='text-base font-bold ml-2'>{(completeScore / 11).toFixed(2)}</span></h2>
             </div>
             <br />
-            <button className="text-base font-bold px-4 py-3 rounded-xl bg-red-500 text-white hover:bg-red-600" onClick={handleSubmit}>Submit</button>
+            {/* <button className="text-base font-bold px-4 py-3 rounded-xl bg-red-500 text-white hover:bg-red-600" onClick={handleSubmit}>Submit</button> */}
           </div>
         )}
       </div>

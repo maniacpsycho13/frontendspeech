@@ -4,21 +4,20 @@ import CustomRecorder from './Azure/CustomRecorder';
 
 const LevelBox = ({ closeDialog, letter, levelArray, userid }) => {
   const [isRecording, setIsRecording] = useState(false);
-  const [audioData, setAudioData] = useState("Not Running"); // Store audioData in state
-  // create submit state 
-  const [submitted, setSubmitted] = useState(false);
+  const [audioData, setAudioData] = useState("Not Running"); 
+  const [submitted, setSubmitted] = useState("Not submitted");
   const handleSubmit = () => {
-    setSubmitted(true);
+    setSubmitted("Submitted");
   }
 
   const startRecording = () => {
     setIsRecording(true);
-    setAudioData("Running"); // Update state
+    setAudioData("Running");
   };
 
   const stopRecording = () => {
     setIsRecording(false);
-    setAudioData("Not Running"); // Update state
+    setAudioData("Not Running"); 
   };
 
   return (
@@ -52,6 +51,8 @@ const LevelBox = ({ closeDialog, letter, levelArray, userid }) => {
               userid={userid}
               onClose={closeDialog}
               audioData={audioData} 
+              submitted={submitted}
+              resetSubmit={() => setSubmitted("Not submitted")}
             />
           </div>
           <div className="bg-white rounded-xl p-6 shadow-inner">
@@ -61,6 +62,8 @@ const LevelBox = ({ closeDialog, letter, levelArray, userid }) => {
               userid={userid}
               onClose={closeDialog}
               audioData={audioData} 
+              submitted={submitted}
+              resetSubmit={() => setSubmitted("Not submitted")}
             />
           </div>
         </div>

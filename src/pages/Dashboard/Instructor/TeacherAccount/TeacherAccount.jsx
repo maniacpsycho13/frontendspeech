@@ -17,7 +17,7 @@ const TeacherAccount = () => {
     <div className="bg-[#FAFAFA] min-h-screen pt-8  pl-8 pr-24 flex  w-full shadow-2xl">
       <div className="w-full  bg-white rounded-xl shadow-xl  h-full">
         {/* Profile Header */}
-        <div className="flex flex-col sm:flex-row items-center justify-between p-8 bg-gradient-to-r  from-[#75AEFF] to-[#6b2ba3] text-white rounded-t-lg ">
+        <div className="flex flex-col sm:flex-row items-center justify-between p-8 bg-gradient-to-r  from-blue-400 to-indigo-500 text-white rounded-t-lg ">
           <div className="flex items-center mb-6 sm:mb-0">
             <img
               src={teacherData.profilePhoto}

@@ -37,7 +37,7 @@ const TeacherAllStudents = () => {
       try {
         toast.loading('Fetching students...');
         const response2 = await axios.get(
-          `https://speechbk-asghe5g9d2fsfydr.eastus2-01.azurewebsites.net/api/v1/data/student/data/${uniqueId}`
+          `https://speechbk-asghe5g9d2fsfydr.eastus2-01.azurewebsites.net/api/v1/data/student/data/${uniqueId}/Azure-001`
         );
         toast.dismiss();
         toast.success('Students fetched successfully!');
