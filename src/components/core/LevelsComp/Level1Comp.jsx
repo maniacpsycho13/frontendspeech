@@ -50,19 +50,19 @@ const Level1Comp = () => {
 
   console.log("Updated level array: ", levelArray);
 
-  const letters = ['Rainbow', 'Butterfly', 'Raindrop', 'Wiggle', 'Magic', 'Wonder'];
+  const letters = ['She carefully packed her suitcase, ensuring everything she needed for the vacation was neatly folded and organized in layers.', 'The adventurous hikers climbed the rugged mountain, overcoming obstacles and reaching the summit just in time to see the sunrise', ];
 
   return (
     <div className="w-full h-screen overflow-y-auto p-8 ">
       <h1 className="text-black text-[40px] font-extrabold text-center mb-8">
         LEVEL 1: Choose a Letter
       </h1>
-      <div className="grid grid-cols-4 gap-12 mx-auto mt-4">
+      <div className="grid grid-cols-1 gap-12 mx-auto mt-4">
         {letters.map((letter, index) => (
           <div
             key={index}
             onClick={() => { handleClick(letter); handleLevel(index); }}
-            className="transform transition duration-300 ease-in-out bg-gradient-to-br from-[#3B82F6] to-[#D1C4E9]  text-white shadow-lg hover:scale-105 hover:shadow-xl hover:opacity-80 px-16 py-8 flex items-center justify-center text-[60px] w-full rounded-2xl font-bold cursor-pointer text-center"
+            className="transform transition duration-300 ease-in-out bg-gradient-to-br from-[#3B82F6] to-[#D1C4E9]  text-white shadow-lg hover:scale-105 hover:shadow-xl hover:opacity-80 px-16 py-8 flex items-center justify-center text-[40px] w-full rounded-2xl font-bold cursor-pointer text-center"
           >
             {letter}
           </div>

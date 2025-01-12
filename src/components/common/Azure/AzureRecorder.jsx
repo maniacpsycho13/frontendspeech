@@ -4,7 +4,7 @@ import * as sdk from 'microsoft-cognitiveservices-speech-sdk';
 import CongratsBox from '../CongratsBox';
 import toast, { Toaster } from 'react-hot-toast';
 
-const AzureRecorder = ({ letter, levelArray, userid, onClose,audioData,submitted,resetSubmit  }) => {
+const AzureRecorder = ({ letter, levelArray, userid, onClose, audioData, submitted, resetSubmit }) => {
   const [isRecording, setIsRecording] = useState(false);
   const [recognizer, setRecognizer] = useState(null);
   const [transcribedText, setTranscribedText] = useState('');
@@ -16,7 +16,22 @@ const AzureRecorder = ({ letter, levelArray, userid, onClose,audioData,submitted
   const [showCongrats, setShowCongrats] = useState(false);
   const [showRetry, setShowRetry] = useState(false);
 
+  const [scoree , setscoree] = useState('');
+
   useEffect(() => {
+    // Load stored scores from localStorage (if any)
+    const storedPronunciationScore = localStorage.getItem("pronunciationScore");
+    const storedAccuracyScore = localStorage.getItem("accuracyScore");
+    const storedFluencyScore = localStorage.getItem("fluencyScore");
+    const storedCompletenessScore = localStorage.getItem("completenessScore");
+    const storedCompleteScore = localStorage.getItem("completeScore");
+
+    if (storedPronunciationScore) setPronunciation(parseFloat(storedPronunciationScore));
+    if (storedAccuracyScore) setAccuracyScore(parseFloat(storedAccuracyScore));
+    if (storedFluencyScore) setFluency(parseFloat(storedFluencyScore));
+    if (storedCompletenessScore) setCompleteness(parseFloat(storedCompletenessScore));
+    if (storedCompleteScore) setComplete(parseFloat(storedCompleteScore));
+
     const speechConfig = sdk.SpeechConfig.fromSubscription("82bdaa2bcfd846df82c3b613f26106e6", "eastus");
     speechConfig.speechRecognitionLanguage = "en-US";
     const audioConfig = sdk.AudioConfig.fromDefaultMicrophoneInput();
@@ -33,24 +48,38 @@ const AzureRecorder = ({ letter, levelArray, userid, onClose,audioData,submitted
     recognizer.recognizing = (s, e) => {
       if (e.result.reason === sdk.ResultReason.RecognizingSpeech) {
         setTranscribedText(e.result.text);
+        console.log("Recognizing Speech:", e.result.text);
       }
     };
 
     recognizer.recognized = (s, e) => {
       if (e.result.reason === sdk.ResultReason.RecognizedSpeech) {
         setTranscribedText(e.result.text);
-
+      console.log("Recognized Speech Result:", e.result); // Log recognized speech result
         const pronunciationAssessmentResult = sdk.PronunciationAssessmentResult.fromResult(e.result);
+        console.log("Pronunciation Assessment Result:", pronunciationAssessmentResult);
+        setscoree(pronunciationAssessmentResult);
         const a = pronunciationAssessmentResult.pronunciationScore;
         const b = pronunciationAssessmentResult.accuracyScore;
         const c = pronunciationAssessmentResult.fluencyScore;
         const d = pronunciationAssessmentResult.completenessScore;
 
+        // result for each letter
+        
+
+        // Store scores temporarily in state
         setPronunciation(a);
         setCompleteness(d);
         setFluency(c);
         setAccuracyScore(b);
         setComplete((a + b + c + d) / 4);
+        
+        // Store scores in localStorage for later use
+        localStorage.setItem("pronunciationScore", a);
+        localStorage.setItem("accuracyScore", b);
+        localStorage.setItem("fluencyScore", c);
+        localStorage.setItem("completenessScore", d);
+        localStorage.setItem("completeScore", (a + b + c + d) / 4);
       } else if (e.result.reason === sdk.ResultReason.NoMatch) {
         console.log('No speech recognized.');
       }
@@ -71,27 +100,15 @@ const AzureRecorder = ({ letter, levelArray, userid, onClose,audioData,submitted
     setIsRecording(true);
     recognizer?.startContinuousRecognitionAsync();
   };
-  // useEffect(() => {
-  //   if(audioData=="Running"){
-  //     recognizer?.startContinuousRecognitionAsync();
-  //   }else{
-  //     recognizer?.stopContinuousRecognitionAsync();
-  //   }
-  // }, [audioData, recognizer]);
-  
 
   const stopRecording = () => {
     setIsRecording(false);
     recognizer?.stopContinuousRecognitionAsync();
   };
 
-  // console.log("Audio data:", audioData);
-
   const handleSubmit = async () => {
     try {
-      // Prepare the data for test submission
       toast.loading("Submitting test...");
-      console.log("levelArray", levelArray);
       const testData = {
         total_score: parseFloat((completeScore / 11).toFixed(2)).toString(),
         pronunciation: parseFloat((pronunciationScore / 10).toFixed(2)).toString(),
@@ -100,37 +117,30 @@ const AzureRecorder = ({ letter, levelArray, userid, onClose,audioData,submitted
         levelId: 4,
         sublevelNo: parseInt(levelArray[0].subLevel),
         studentId: parseInt(userid),
-         languageModelID :"Azure-001"
-        
-
+        languageModelID: "Azure-001"
       };
-      console.log("Test data:", testData);
-      console.log("completeScore", (completeScore / 11).toFixed(2));
+
       if ((completeScore / 11).toFixed(2) > 8) {
         const newLevelData = {
           studentId: parseInt(userid),
           sub_level: 6,
           targetLevel: parseInt(levelArray[0].level),
-          langaugeModelID1 :"Azure-001",
-          langaugeModelID2 :"Custom-001"
+          langaugeModelID1: "Azure-001",
+          langaugeModelID2: "Custom-001"
         };
-        console.log("New level attempt data:", newLevelData);
+        console.log("test data", testData);
         const newLevelResponse = await axios.post(
           "https://speechbk-asghe5g9d2fsfydr.eastus2-01.azurewebsites.net/api/v1/level/attempt/new-level",
           newLevelData
         );
+        
 
-      // Submit the test data
-      const response = await axios.post("https:///speechbk-asghe5g9d2fsfydr.eastus2-01.azurewebsites.net/api/v1/test/test-attempt/azure", testData);
-      console.log("Test submission response:", response);
-
-      // Check the completeness score and send a new-level attempt request if conditions are met
+        // Submit the test data
+        const response = await axios.post("https://speechbk-asghe5g9d2fsfydr.eastus2-01.azurewebsites.net/api/v1/test/test-attempt/azure", testData);
 
         toast.dismiss();
-
         toast.success("Test submitted successfully!");
 
-        console.log("New level attempt response:", newLevelResponse);
         setShowCongrats(true);
         setShowRetry(false);
       } else {
@@ -144,13 +154,11 @@ const AzureRecorder = ({ letter, levelArray, userid, onClose,audioData,submitted
   };
 
   useEffect(() => {
-    if(submitted == 'Submitted'){
+    if (submitted === 'Submitted') {
       handleSubmit();
       resetSubmit();
     }
   }, [submitted, resetSubmit]);
-
-
 
   useEffect(() => {
     if (showCongrats || showRetry) {
@@ -166,10 +174,11 @@ const AzureRecorder = ({ letter, levelArray, userid, onClose,audioData,submitted
 
   return (
     <div>
-      <Toaster></Toaster>
-      <h1 className='text-[18px] mt-2 font-semibold'>Real-Time Speech-to-Text with Pronunciation Accuracy</h1>
+      <Toaster />
+      
+      <h1 className='text-[24px] mt-2 font-semibold text-center '>Try Your Pronunciation Skill With <span className='text-[#3B82F6] font-bold'>GIGGLIO.AI</span> !</h1>
       <div className='flex mt-3'>
-        <p className='text-red-500 font-bold text-[24px]'>{letter}</p>
+        <p className=' text-[24px] font-medium '>Speak the Word : <span className='text-red-500 font-bold underline'>{letter}</span></p>
       </div>
       <div className='flex justify-center mt-4'>
         <button onClick={isRecording ? stopRecording : startRecording} className='bg-gradient-to-br font-bold from-[#3B82F6] to-[#D1C4E9] px-6 py-3 text-white rounded-xl shadow-lg hover:shadow-2xl transition-transform transform hover:scale-105'>
@@ -177,22 +186,31 @@ const AzureRecorder = ({ letter, levelArray, userid, onClose,audioData,submitted
         </button>
       </div>
       <div>
-        <h2 className='text-sm mt-2 mb-2'>Transcribed Text: <span className='text-base font-bold ml-2'>{transcribedText}</span></h2>
-        {accuracyScore !== null && (
-          <div>
-            <div className='flex flex-col gap-3 px-3 py-3 rounded-xl border-[1px] shadow-2xl justify-center'>
-              <h2 className='text-sm'>Accuracy Score: <span className='text-base font-bold ml-2'>{(accuracyScore / 10).toFixed(2)}</span></h2>
-              <h2 className='text-sm'>Pronunciation Score: <span className='text-base font-bold ml-2'>{(pronunciationScore / 10).toFixed(2)}</span></h2>
-              <h2 className='text-sm'>Completeness Score: <span className='text-base font-bold ml-2'>{(completenessScore / 11).toFixed(2)}</span></h2>
-              <h2 className='text-sm'>Fluency Score: <span className='text-base font-bold ml-2'>{(fluencyScore / 11).toFixed(2)}</span></h2>
-              <h2 className='text-sm'>Complete Score: <span className='text-base font-bold ml-2'>{(completeScore / 11).toFixed(2)}</span></h2>
-            </div>
-            <br />
-            {/* <button className="text-base font-bold px-4 py-3 rounded-xl bg-red-500 text-white hover:bg-red-600" onClick={handleSubmit}>Submit</button> */}
+      <h2 className="text-sm mt-2 mb-2">
+  Transcribed Text:{" "}
+  <span className="text-base font-bold ml-2">
+  {scoree?.detailResult?.Words?.map((wordObj, index) => {
+    const { Word, PronunciationAssessment } = wordObj || {};
+    const { ErrorType } = PronunciationAssessment || {};
+    const color = ErrorType === "None" ? "text-green-600" : "text-red-600";
+    return (
+      <span key={index} className={`${color} mr-1`}>
+        {Word}
+      </span>
+    );
+  })}
+</span>
+</h2>
+        {(accuracyScore !== null || pronunciationScore !== null || completenessScore !== null || fluencyScore !== null || completeScore !== null) && (
+          <div className='flex flex-col gap-3 px-3 py-3 rounded-xl border-[1px] shadow-2xl justify-center'>
+            <h2 className='text-sm'>Accuracy Score: <span className='text-base font-bold ml-2'>{(accuracyScore || localStorage.getItem("accuracyScore")) ? (parseFloat(accuracyScore) / 10).toFixed(2) : 'N/A'}</span></h2>
+            <h2 className='text-sm'>Pronunciation Score: <span className='text-base font-bold ml-2'>{(pronunciationScore || localStorage.getItem("pronunciationScore")) ? (parseFloat(pronunciationScore) / 10).toFixed(2) : 'N/A'}</span></h2>
+            <h2 className='text-sm'>Fluency Score: <span className='text-base font-bold ml-2'>{(fluencyScore || localStorage.getItem("fluencyScore")) ? (parseFloat(fluencyScore) / 10).toFixed(2) : 'N/A'}</span></h2>
+            <h2 className='text-sm'>Completeness Score: <span className='text-base font-bold ml-2'>{(completenessScore || localStorage.getItem("completenessScore")) ? (parseFloat(completenessScore) / 10).toFixed(2) : 'N/A'}</span></h2>
+            <h2 className='text-sm'>Complete Score: <span className='text-base font-bold ml-2'>{completeScore ? (parseFloat(completeScore) / 10).toFixed(2) : 'N/A'}</span></h2>
           </div>
         )}
       </div>
-
       {(showCongrats || showRetry) && (
         <CongratsBox
           showCongrats={showCongrats}
