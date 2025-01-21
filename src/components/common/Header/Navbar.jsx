@@ -26,14 +26,14 @@ const Navbar = () => {
   }, []);
 
   return (
-    <div className='w-full px-12 pt-4 bg-[#F4F4F4]'>
-      <div className='flex h-14 items-center justify-between bg-[#F4F4F4] px-8'>
+    <div className='w-full px-12 pt-4 bg-[#F4F4F4] fixed z-50 border-b-[2px] border-gray-300'>
+      <div className='flex h-14 items-center justify-between bg-[#F4F4F4] px-8 '>
 
-        <Link to="/">
+        <Link to="/" className=''>
           <img src={logo} width={160} height={42} loading="lazy" alt="logo" />
         </Link>
         <nav>
-          <ul className='flex gap-x-8'>
+          <ul className='flex gap-x-8 z-[120]'>
             {NavbarLinks.map((link, index) => (
               <li key={index} className='flex'>
                 <NavLink 

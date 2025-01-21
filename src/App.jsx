@@ -15,6 +15,7 @@ import Navbar from './components/common/Header/Navbar';
 import Verification from './pages/Auth/Verification';
 import Level2 from './pages/Levels/Level2';
 import TeacherSetting from './pages/Dashboard/Instructor/TeacherSetting/TeacherSetting';
+import Test from './pages/Test';
 
 function App() {
   
@@ -51,6 +52,8 @@ function App() {
           <Route path="allstudents" element={<TeacherAllStudents/>} />
           <Route path="setting" element={<TeacherSetting/>} />
         </Route>
+
+        <Route path="test" element={<Test/>} />
       </Routes>
       
     </div>

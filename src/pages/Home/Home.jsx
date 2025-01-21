@@ -1,15 +1,31 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Navbar from '../../components/common/Header/Navbar'
 import Goku from '../../components/common/Goku'
 import { GroupImage, level1Image } from '../../assets/common'
 import { Link } from 'react-router-dom'
+import FirstAppear from "../../components/common/FirstAppear"
 
 const Home = () => {
+
+  const [firstTime, setFirstTime] = useState(false);
+
+  useEffect(() => {
+    const flag = localStorage.getItem("flag");
+
+    if (!flag) {
+      setFirstTime(true);
+      localStorage.setItem("flag", "done");
+    }
+  }, []);
+
+
   return (
-    <div className='w-full bg-[#F4F4F4]'>
-        
+    <div className='w-full bg-[#F4F4F4] overflow-y-auto overflow-hidden'>
+        <div className='absolute z-[100] overflow-hidden'>
+          {firstTime && <FirstAppear />}
+        </div>
   
-        <div className='flex w-full px-12'>
+        <div className='flex w-full px-12 pt-16'>
             <div className='w-[80%] h-[30%]'>
                 <Goku/>
             </div>
