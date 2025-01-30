@@ -85,13 +85,13 @@ const TeacherAllStudents = () => {
   return (
     <div>
       <Toaster />
-      <h2 className="text-3xl font-bold text-center">List Of Students</h2>
-      <div className='text-2xl font-bold mt-4 text-[#5702CE] '>Azure Student Cards</div>
+      <h2 className="text-5xl font-semibold text-[#5B9CF9] my-16 font-gilroy">List Of Students</h2>
+      <div className='text-3xl font-semibold mt-4 mb-6 font-gilroy'>Azure Student Cards</div>
       <div className="flex flex-wrap gap-12 mt-3">
         {students.map((student) => (
           <div
             key={student.id}
-            className="flex flex-wrap pl-4 py-3 boxgradient w-[22rem] h-[13rem] overflow-hidden relative"
+            className="flex flex-wrap pl-4 py-3 bg-[#5B9CF9] rounded-3xl w-[22rem] h-[13rem] overflow-hidden relative"
           >
             <div className="flex w-full gap-6 pr-4">
               <div>
@@ -100,10 +100,10 @@ const TeacherAllStudents = () => {
                   alt="profile"
                   width={72}
                   height={72}
-                  className="rounded-full border-[4px] border-[#6F52CE] p-[2px]"
+                  className="rounded-full border-[2px] border- p-[2px]"
                 />
               </div>
-              <div className="text-[#5702CE] font-extrabold text-[24px] mt-2">
+              <div className="text-white font-bold text-[24px] mt-2">
                 {student.name || 'N/A'}
               </div>
             </div>
@@ -115,7 +115,7 @@ const TeacherAllStudents = () => {
             </p>
             <button
               onClick={() => openModal(student)}
-              className="absolute transform translate-x-[250px] translate-y-[140px] px-4 py-2 bg-[#6920CF] rounded-2xl text-white font-medium hover:bg-[#5420CF] cursor-pointer"
+              className="absolute transform translate-x-[250px] translate-y-[140px] px-4 py-2 bg-white rounded-2xl text-md text-[#5B9CF9] font-bold hover:bg-gray-200 cursor-pointer"
             >
               View
             </button>
@@ -123,14 +123,14 @@ const TeacherAllStudents = () => {
         ))}
       </div>
 
-      <div className='text-2xl font-bold mt-8 text-[#5702CE] '>
+      <div className='text-3xl font-gilroy font-semibold mt-8  '>
         Custom Student Card
       </div>
       <div className="flex flex-wrap gap-12 mt-3">
         {students2.map((student) => (
           <div
             key={student.id}
-            className="flex flex-wrap pl-4 py-3 boxgradient2 w-[22rem] h-[13rem] overflow-hidden relative"
+            className="flex flex-wrap pl-4 py-3 bg-[#5B9CF9] rounded-3xl w-[22rem] h-[13rem] overflow-hidden relative"
           >
             <div className="flex w-full gap-6 pr-4">
               <div>
@@ -139,10 +139,10 @@ const TeacherAllStudents = () => {
                   alt="profile"
                   width={72}
                   height={72}
-                  className="rounded-full border-[4px] border-[#6F52CE] p-[2px]"
+                  className="rounded-full border-[2px] border-white p-[2px]"
                 />
               </div>
-              <div className="text-[#5702CE] font-extrabold text-[24px] mt-2">
+              <div className="text-white font-bold text-[24px] mt-2">
                 {student.name || 'N/A'}
               </div>
             </div>
@@ -154,7 +154,7 @@ const TeacherAllStudents = () => {
             </p>
             <button
               onClick={() => openModal(student)}
-              className="absolute transform translate-x-[250px] translate-y-[140px] px-4 py-2 bg-[#6920CF] rounded-2xl text-white font-medium hover:bg-[#5420CF] cursor-pointer"
+              className="absolute transform translate-x-[250px] translate-y-[140px] px-4 py-2 bg-white rounded-2xl text-md text-[#5B9CF9] font-bold hover:bg-gray-200 cursor-pointer"
             >
               View
             </button>

@@ -14,10 +14,10 @@ const TeacherAccount = () => {
   };
 
   return (
-    <div className="bg-[#FAFAFA] min-h-screen pt-8  pl-8 pr-24 flex  w-full shadow-2xl">
-      <div className="w-full  bg-white rounded-xl shadow-xl  h-full">
+    <div className="font-gilroy bg-[#FAFAFA] min-h-screen pt-8 mt-16 pl-8 pr-24 flex  w-full shadow-2xl">
+      <div className="w-full  bg-white rounded-xl   h-full">
         {/* Profile Header */}
-        <div className="flex flex-col sm:flex-row items-center justify-between p-8 bg-gradient-to-r  from-blue-400 to-indigo-500 text-white rounded-t-lg ">
+        <div className="flex flex-col sm:flex-row items-center justify-between p-8 bg-[#5B9CF9] text-white rounded-t-lg ">
           <div className="flex items-center mb-6 sm:mb-0">
             <img
               src={teacherData.profilePhoto}
@@ -25,13 +25,13 @@ const TeacherAccount = () => {
               className="w-32 h-32 rounded-full border-4 border-white shadow-lg"
             />
             <div className="ml-6">
-              <h2 className="text-4xl font-semibold">{teacherData.name}</h2>
-              <p className="text-xl mt-2">{teacherData.role}</p>
-              <p className="text-lg mt-1">{teacherData.email}</p>
+              <h2 className="text-5xl font-bold">{teacherData.name}</h2>
+              <p className="text-2xl mt-2">{teacherData.role}</p>
+              <p className="text-xl mt-1">{teacherData.email}</p>
             </div>
           </div>
           <div className="text-right mt-6 sm:mt-0">
-            <button className="px-6 py-2 bg-white text-[#75AEFF] font-semibold rounded-full shadow-lg hover:bg-[#75AEFF] hover:text-white transition duration-300 ease-in-out">
+            <button className="px-6 py-2 bg-white text-[#5B9CF9] font-semibold rounded-full shadow-lg hover:bg-[#75AEFF] hover:text-white transition duration-300 ease-in-out">
               Edit Profile
             </button>
           </div>
@@ -40,7 +40,7 @@ const TeacherAccount = () => {
         {/* Bio Section */}
         <div className="p-8">
           <h3 className="text-2xl font-semibold text-[#75AEFF] mb-4">Bio</h3>
-          <p className="text-gray-700">{teacherData.bio}</p>
+          <p className="text-gray-700 text-xl">{teacherData.bio}</p>
         </div>
 
         {/* Students Count */}
@@ -52,7 +52,7 @@ const TeacherAccount = () => {
         {/* Background Section */}
         <div className="p-8">
           <h3 className="text-2xl font-semibold text-[#75AEFF] mb-4">Background</h3>
-          <p className="text-gray-700">
+          <p className="text-gray-700 text-xl">
             I have been teaching for over 10 years, with a focus on creating innovative learning experiences for students. I love
             integrating technology into my lessons and providing individualized support to ensure every student can succeed.
           </p>

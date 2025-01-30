@@ -7,7 +7,7 @@ import { NavLink } from 'react-router-dom';
 
 const StudentSidebar = () => {
   return (
-    <div className='flex-col items-center pl-20 pr-8 mt-8 bg-[#E7E6E6] py-6 h-screen'>
+    <div className='flex-col items-center font-gilroy  pl-20 pr-8 mt-16 bg-[#E7E6E6] py-6 h-screen'>
       <div className='flex gap-16 items-center'>
         <p className='text-black font-bold text-2xl mx-auto'>MENU</p>
         <div className='rounded-full p-2 bg-[#FFFFFF]'>

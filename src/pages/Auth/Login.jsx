@@ -98,7 +98,7 @@ const Login = () => {
   ];
 
   return (
-    <div className='h-screen bg-[#F4F4F4] pt-24'>
+    <div className='h-screen bg-[#F4F4F4] pt-52'>
       <Toaster></Toaster>
       <div className="flex px-12 justify-center">
       <div className="w-[35%] border-black border-y-2 border-l-2 px-20 py-12">

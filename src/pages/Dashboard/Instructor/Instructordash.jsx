@@ -5,7 +5,7 @@ import TeacherSidebar from '../../../components/core/Dashboard/TeacherSidebar'
 
 const Instructordash = () => {
   return (
-    <div className='bg-[#F4F4F4] w-full h-full'>
+    <div className='bg-[#F4F4F4] w-full h-full '>
         
         <div className='flex gap-12'>
             <div>

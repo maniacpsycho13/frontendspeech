@@ -33,18 +33,18 @@ const TeacherSidebar = () => {
 
   return (
     <div
-      className={`flex flex-col ${isOpen ? "w-64" : "w-20"} h-screen bg-gradient-to-br from-blue-400 to-indigo-500
+      className={`flex flex-col ${isOpen ? "w-64" : "w-20"} font-gilroy mt-20  h-screen bg-[#5B9CF9] 
  text-white transition-all duration-300 shadow-lg`}
     >
       {/* Sidebar Header */}
-      <div className="flex items-center justify-between px-4 py-4 border-b border-blue-300">
+      <div className="flex items-center justify-between px-4 py-4 border-b bg-[#5B9CF9]">
         <button
           onClick={toggleSidebar}
-          className="p-2 rounded-full bg-white text-blue-600 cursor-pointer hover:shadow-md transition-transform hover:scale-105"
+          className="p-2 rounded-full bg-white text-black cursor-pointer hover:shadow-md transition-transform hover:scale-105"
         >
           <IoMdMenu size={28} />
         </button>
-        {isOpen && <h1 className="text-xl font-bold">Teacher Menu</h1>}
+        {isOpen && <h1 className="text-xl font-semibold">Teacher Menu</h1>}
       </div>
 
       {/* Sidebar Links */}
@@ -79,15 +79,15 @@ const TeacherSidebar = () => {
             onClick={link.onClick}
             className={`flex items-center gap-4 px-3 py-2 rounded-lg ${
               isLinkActive(link.to)
-                ? "bg-white text-blue-600 shadow-md"
-                : "hover:bg-white hover:text-blue-600 transition-all"
+                ? "bg-white text-black shadow-md"
+                : "hover:bg-white hover:text-black transition-all"
             }`}
           >
             <div
               className={`p-2 rounded-full shadow-md ${
                 isLinkActive(link.to)
-                  ? "bg-blue-300 text-white"
-                  : "bg-white text-blue-600"
+                  ? "bg-white text-black border-2 border-black transition-all delay-75"
+                  : "bg-white text-black "
               }`}
             >
               {link.icon}
@@ -100,20 +100,20 @@ const TeacherSidebar = () => {
       {/* Logout Confirmation Dialog */}
       {isDialogOpen && (
         <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center z-50">
-  <div className="bg-gradient-to-br from-blue-500 to-indigo-600 p-8 rounded-2xl shadow-2xl max-w-md w-full transform transition-all duration-500 scale-100 hover:scale-105">
+  <div className="bg-gradient-to-br bg-[#5B9CF9] p-8 rounded-2xl shadow-2xl max-w-md w-full transform transition-all  duration-300">
     <h2 className="text-2xl font-semibold text-center text-white mb-6">
       Are you sure you want to log out?
     </h2>
     <div className="flex justify-around space-x-4">
       <button
         onClick={() => setIsDialogOpen(false)} // Close dialog without logging out
-        className="px-6 py-3 bg-white text-gray-700 rounded-lg shadow-md hover:bg-gray-200 transition-all duration-300 ease-in-out transform hover:scale-105"
+        className="px-6 py-3 bg-white text-gray-700  font-semibold rounded-lg shadow-md hover:bg-gray-400 transition-all duration-300 "
       >
         Cancel
       </button>
       <button
         onClick={handleLogout}
-        className="px-6 py-3 bg-red-500 text-white rounded-lg shadow-md hover:bg-red-600 transition-all duration-300 ease-in-out transform hover:scale-105"
+        className="px-6 py-3 bg-red-500 text-white rounded-lg font-semibold shadow-md hover:bg-red-600 transition-all duration-300 "
       >
         Yes, Log Out
       </button>

@@ -23,11 +23,11 @@ const Account = () => {
   };
 
   return (
-    <div className="min-h-screen w-full bg-[#f4f4f4] p-8 flex  items-center justify-center">
+    <div className="min-h-screen w-full bg-[#f4f4f4] p-8 font-gilroy flex  items-center justify-center">
       {/* Profile Card */}
       <div className=" w-full bg-white rounded-3xl shadow-2xl ">
         {/* Top Section with Background */}
-        <div className="relative bg-gradient-to-r  from-[#75AEFF] to-[#6b2ba3]  p-8 text-white">
+        <div className="relative bg-[#5B9CF9]    p-8 text-white">
           <div className="flex items-center gap-8">
             <img
               src={`https://api.dicebear.com/6.x/initials/svg?seed=${studentData.name}&backgroundColor=00897b,00acc1,039be5,1e88e5,3949ab,43a047,5e35b1,7cb342,8e24aa,c0ca33,d81b60,e53935,f4511e,fb8c00,fdd835,ffb300,ffd5dc,ffdfbf,c0aede,d1d4f9,b6e3f4&backgroundType=solid,gradientLinear&backgroundRotation=0,360,-350,-340,-330,-320&fontFamily=Arial&fontWeight=600`}

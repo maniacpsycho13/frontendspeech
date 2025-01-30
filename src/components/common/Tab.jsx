@@ -12,8 +12,8 @@ export default function Tab({ tabData, field, setField }) {
             onClick={() => setField(tab.type)}
             className={`${
               field === tab.type
-                ? "bg-[#5B9CF9] text-black font-bold"
-                : "bg-transparent text-black font-bold"
+                ? "bg-[#5B9CF9] text-white text-xl hover:text-2xl font-semibold"
+                : "bg-transparent text-black text-xl hover:text-2xl font-semibold"
             } py-2 px-5 rounded-full transition-all duration-200`}
           >
             {tab?.tabName}
