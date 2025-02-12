@@ -63,7 +63,7 @@ export default function ProfileDropdown() {
       {open && (
         <div
           ref={ref}
-          className="absolute top-[118%] -right-8 z-[1000] divide-y-[1px] divide-richblack-700 overflow-hidden rounded-md border-[1px] border-richblack-700 bg-richblack-800"
+          className="absolute top-[118%]  z-[1000] divide-y-[1px] divide-richblack-700 overflow-hidden rounded-md border-[1px] border-richblack-700 bg-richblack-800"
           onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside
         >
           {/* Dashboard option */}

@@ -8,7 +8,7 @@ const Goku = () => {
         style={{
           width: '2000px', // Increase width to avoid zooming in
           height: '1000px', // Increase height to avoid zooming in
-          transform: 'scale(1.0) translate(-50%, -60%)', // Adjust scale and position to fit within the div
+          transform: 'scale(0.8) translate(-63%, -60%)', // Adjust scale and position to fit within the div
           transformOrigin: 'center', // Ensure scaling is applied from the center
           position: 'absolute', // Ensure proper positioning inside the div
           top: '50%',
