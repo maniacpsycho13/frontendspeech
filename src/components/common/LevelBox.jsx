@@ -97,12 +97,12 @@ const LevelBox = ({ closeDialog, letter, levelArray, userid }) => {
 
 
         <div className="flex justify-center mt-8">
-          {/* <button
+          <button
             className="text-base font-bold px-12 py-3 rounded-xl bg-red-500 text-white hover:bg-red-600"
             onClick={handleSubmit}
           >
             Submit
-          </button> */}
+          </button>
         </div>
       </div>
     </div>
