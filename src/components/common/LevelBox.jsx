@@ -6,7 +6,7 @@ const LevelBox = ({ closeDialog, letter, levelArray, userid }) => {
   const [isRecording, setIsRecording] = useState(false);
   const [audioData, setAudioData] = useState("Not Running");
   const [submitted, setSubmitted] = useState("Not submitted");
-  const [selectedRecorder, setSelectedRecorder] = useState('Azure'); // State to track selected recorder
+  const [selectedRecorder, setSelectedRecorder] = useState('Azure'); 
 
   const handleSubmit = () => {
     // Clear all local storage data

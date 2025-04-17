@@ -181,23 +181,15 @@ const AzureRecorder = ({ letter, levelArray, userid, onClose, audioData, submitt
   return (
     <div className=" flex flex-col items-center justify-center bg-gray-100 w-full overflow-y-auto">
       <div className="bg-white shadow-lg rounded-lg p-8 w-full  text-center">
-        <h1 className="text-3xl font-bold mb-6 text-gray-700">Audio Recorder</h1>
-
-        {error && (
-          <div className="mb-4 p-3 bg-red-100 text-red-700 rounded-lg">
-            {error}
-          </div>
-        )}
-
-        <p>{letter}</p>
-
-        <div className="space-x-4">
+        <div className="flex justify-between ">
+        <h1 className="text-3xl font-bold  text-gray-700">Audio Recorder</h1>
+        <div className="space-x-4 text-xl">
           {!isRecording ? (
             <button
               onClick={startRecording}
               className="px-6 py-3 rounded-lg font-medium bg-blue-500 text-white hover:bg-blue-600 transition"
             >
-              Start Recording
+              Start Reading
             </button>
           ) : (
             <>
@@ -232,11 +224,21 @@ const AzureRecorder = ({ letter, levelArray, userid, onClose, audioData, submitt
             </>
           )}
         </div>
+        </div>
+        {error && (
+          <div className="mb-4 p-3 bg-red-100 text-red-700 rounded-lg">
+            {error}
+          </div>
+        )}
+
+        <p className="text-3xl font-semibold mt-10">{letter}</p>
+
+
 
         {audioURL && (
           <div className="mt-6 w-full" >
             <h3 className="text-lg font-semibold text-gray-700">Preview:</h3>
-            <audio src={audioURL} controls className="mt-3 w-full" />
+            {/* <audio src={audioURL} controls className="mt-3 w-full" /> */}
             <button
               onClick={sendAudioToServer}
               disabled={isLoading}
